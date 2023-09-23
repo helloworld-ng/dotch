@@ -26,6 +26,7 @@ button {
   outline: none;
   border: none;
   border-radius: 32px;
+  font-size: 16px;
   font-family: Bricolage;
 }
 
@@ -33,6 +34,5 @@ header {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-bottom: 2rem;
   height: 100px;
 }
