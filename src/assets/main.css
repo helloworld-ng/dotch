@@ -1,35 +1,38 @@
 @import './base.css';
 
+body {
+  overflow: hidden;
+}
+
 #app {
   max-width: 1280px;
   margin: 0 auto;
-  padding: 2rem;
-
+  padding: 0;
   font-weight: normal;
+  height: 100vh;
+  overflow: scroll;
 }
 
-a,
-.green {
+a {
   text-decoration: none;
-  color: hsla(160, 100%, 37%, 1);
+  color: white;
   transition: 0.4s;
 }
 
-@media (hover: hover) {
-  a:hover {
-    background-color: hsla(160, 100%, 37%, 0.2);
-  }
+button {
+  padding: 14px 32px;
+  background: var(--vt-c-black);
+  color: var(--vt-c-white);
+  outline: none;
+  border: none;
+  border-radius: 32px;
+  font-family: Bricolage;
 }
 
-@media (min-width: 1024px) {
-  body {
-    display: flex;
-    place-items: center;
-  }
-
-  #app {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    padding: 0 2rem;
-  }
+header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 2rem;
+  height: 100px;
 }
