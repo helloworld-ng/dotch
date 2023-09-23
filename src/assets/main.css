@@ -30,6 +30,10 @@ button {
   font-family: Bricolage;
 }
 
+button.secondary {
+  background: rgb(25 26 38 / 26%);
+}
+
 header {
   display: flex;
   justify-content: center;

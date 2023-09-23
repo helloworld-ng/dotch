@@ -1,5 +1,5 @@
 <script setup>
-import CameraMan from '../components/CameraMan.vue'
+import ScanReceipt from '../components/ScanReceipt.vue'
 </script>
 
 <template>
@@ -8,7 +8,7 @@ import CameraMan from '../components/CameraMan.vue'
       <img alt="Dotch logo" src="../assets/logo.svg" />
     </header>
     <main>
-      <CameraMan v-if="!aboutVisible" />
+      <ScanReceipt v-if="!aboutVisible" />
       <div v-else>
         Dotch is an app for scanning recipts.
       </div>
@@ -48,6 +48,9 @@ export default {
     justify-content: space-between;
     height: 100%;
   }
+  header {
+    z-index: 100;
+  }
   main {
     flex: 1;
     display: flex;
@@ -70,6 +73,7 @@ export default {
     display: flex;
     justify-content: center;
     align-items: center;
+    color: var(--color-text-mute);
   }
   .divider {
     flex: inherit;
