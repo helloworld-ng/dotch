@@ -8,20 +8,26 @@ import ScanReceipt from '../components/ScanReceipt.vue'
       <img alt="Dotch logo" src="../assets/logo.svg" />
     </header>
     <main>
-      <ScanReceipt v-if="!aboutVisible" />
-      <div v-else>
-        Dotch is an app for scanning recipts.
-      </div>
+      <Transition name="fade" mode="out-in">
+        <div id="scan" v-if="!aboutVisible">
+          <ScanReceipt />
+        </div>
+        <div id="about" v-else>
+          Dotch is an app for <br> scanning receipts.
+        </div>
+    </Transition>
     </main>
     <footer>
-      <div id="default" v-if="!aboutVisible">
-        <a @click="toggleAbout">About</a>
-        <div class="divider"></div>
-        <a href="mailto:dotch.app@gmail.com?subject=Help">Help</a>
-      </div>
-      <div id="about" v-else>
-        <button @click="toggleAbout">Close</button>
-      </div>
+      <Transition name="slide-up" mode="out-in">
+        <div id="nav" v-if="!aboutVisible">
+          <a @click="toggleAbout">About</a>
+          <div class="divider"></div>
+          <a href="mailto:dotch.app@gmail.com?subject=Help">Help</a>
+        </div>
+        <div id="closeAbout" v-else>
+          <button @click="toggleAbout">Close</button>
+        </div>
+      </Transition>
     </footer>
   </div>
 </template>
@@ -57,17 +63,21 @@ export default {
     justify-content: center;
     place-items: center;
   }
+  #about {
+    padding: 24px 36px;
+    text-align: center;
+  }
   footer {
     height: 60px;
     margin: 24px 0;
   }
-  footer > div {
+  #nav, #closeAbout {
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100%;
   }
-  footer > div > a {
+  footer a {
     flex: 1;
     height: 100%;
     display: flex;
