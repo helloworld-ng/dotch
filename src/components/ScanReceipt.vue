@@ -1,21 +1,14 @@
 <script setup>
-defineProps({})
+import WebCam from '../components/WebCam.vue'
 </script>
 
 <template>
-  <div id="cover" @click="openLens" :class="{'scaled': scaleLensCover}">
-    Tap to scan
+  <div id="cover" @click="openLens" :class="{'scaled': isLensCoverScaled}">
+    <span v-if="!url">Tap to scan</span>
+    <div v-else class="spinner"></div>
   </div>
-  <div id="lens" v-if="showLens">
-    <main>
-      <div class="spinner" v-if="loading"></div>
-    </main>
-    <Transition name="slide-down">
-    <footer v-if="!loading">
-      <button class="secondary" @click="closeLens">Cancel</button>
-      <button @click="scan">Scan</button>
-    </footer>
-    </Transition>
+  <div id="lens" v-if="isLensOpen">
+    <WebCam @close="closeLens" @capture="scanImage"  />
   </div>
 </template>
 
@@ -23,27 +16,28 @@ defineProps({})
 export default {
   data() {
     return {
-      scaleLensCover: false,
-      showLens: false,
-      loading: false
+      url: null,
+      isLensCoverScaled: false,
+      isLensOpen: false,
+      isLoading: false
     };
   },
   methods: {
     openLens() {
-      this.scaleLensCover = true;
+      this.isLensCoverScaled = true;
       setTimeout(() => {
-        this.showLens = true;
+        this.isLensOpen = true;
       }, 300);
     },
     closeLens() {
-      this.showLens = false;
-      this.scaleLensCover = false;
+      this.isLensOpen = false;
+      this.isLensCoverScaled = false;
     },
-    scan() {
-      this.loading = true;
+    scanImage(url) {
+      this.url = url;
+      this.closeLens();
       setTimeout(() => {
-        this.loading = false;
-        this.closeLens();
+        this.isLoading = false;
         this.$router.push('/bill/123');
       }, 1000);
     }
@@ -74,26 +68,9 @@ export default {
   right: 0;
   width: 100%;
   height: 100%;
-  background: red;
   z-index: 10;
   display: flex;
   justify-content: center;
   align-items: center;
-}
-footer {
-  height: 60px;
-  margin: 24px;
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 10px;
-}
-footer > button {
-  flex: 1;
-  height: 100%;
 }
 </style>

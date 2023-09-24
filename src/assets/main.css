@@ -79,6 +79,10 @@ button.secondary {
   background: rgb(25 26 38 / 26%);
 }
 
+button.success {
+  background: #08C4B2;
+}
+
 nav {
   display: flex;
   justify-content: center;
