@@ -16,7 +16,7 @@ defineProps({
       </svg>
       {{shortURL}}
     </div>
-    <a href="#" id="share">Share</a>
+    <a @click="share" id="share">Share</a>
   </main>
 </template>
 
@@ -27,6 +27,30 @@ export default {
       shortURL: `dotch.app/bill/${this.id}`,
       longURL: `dotch.app/bill/${this.id}`
     };
+  },
+  computed: {
+    shareData() {
+      return {
+        title: 'Dotch',
+        text: 'Check out my receipt',
+        url: this.longURL
+      };
+    }
+  },
+  methods: {
+    share() {
+      if (navigator.share) {
+        navigator.share(this.shareData)
+          .then(() => {
+            console.log('Shared successfully');
+          })
+          .catch((error) => {
+            console.error('Error sharing:', error);
+          });
+      } else {
+        console.log('Web Share API is not supported in this browser');
+      }
+    }
   }
 }
 </script>
