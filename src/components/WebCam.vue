@@ -35,7 +35,9 @@ export default {
       this.isCameraOpen = true;
       navigator.mediaDevices
         .getUserMedia({
-          video: true,
+          video: {
+            facingMode: "environment"
+          },
           audio: false
         })
         .then(stream => {

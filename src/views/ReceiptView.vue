@@ -23,7 +23,7 @@ import ReceiptItem from '../components/ReceiptItem.vue'
   <main>
     <div id="receipt">
       <div id="toolbar">
-        <Transition name="slide-up" mode="out-in" appear>
+        <Transition name="slide-up" mode="out-in">
           <div id="tooltip" v-if="!selectedItems.length">
             Tap items to add up
           </div>
