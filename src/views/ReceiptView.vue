@@ -16,14 +16,14 @@ import ReceiptItem from '../components/ReceiptItem.vue'
       <p id="date">{{ receipt.date }}</p>
     </div>
    </Transition>
-   <Transition name="slide-up" appear>
+   <Transition name="slide-down" appear>
     <ShareReceipt :id="receipt.id" />
   </Transition>
   </header>
   <main>
     <div id="receipt">
       <div id="toolbar">
-        <Transition name="slide-up" mode="out-in">
+        <Transition name="slide-up" mode="out-in" appear>
           <div id="tooltip" v-if="!selectedItems.length">
             Tap items to add up
           </div>
@@ -67,6 +67,9 @@ import ReceiptItem from '../components/ReceiptItem.vue'
       </ul>
     </div>
   </main>
+  <footer>
+    <a href="/">Scan another receipt</a>
+  </footer>
 </template>
 
 <script>
@@ -205,7 +208,9 @@ export default {
 
 <style scoped>
 header {
-  padding: 0 0 60px;
+  padding: 0 0 48px;
+  position: sticky;
+  top: 0;
 }
 #title {
   display: flex;
@@ -218,10 +223,11 @@ header {
   color: var(--color-text-mute)
 }
 main {
-  position: sticky;
+  position: relative;
   top: 0;
 }
 #receipt {
+  position: relative;
   background: white;
   color: var(--vt-c-text-light-1);
   font-family: Roboto Mono, monospace;
@@ -230,18 +236,25 @@ main {
   padding: 0 24px 30px;
   z-index: 10;
 }
-#receipt:before {
+#receipt:before, #receipt:after {
   content: " ";
   display: block;
   height: 12px;
   width: 100%;
   position: absolute;
-  z-index: 0;
   left: 0;
+}
+#receipt:before {
   background: linear-gradient(-45deg, #FFF 8px, red 8px, blue 8px, transparent 0), linear-gradient(45deg, #FFF 8px, transparent 0);
   background-size: 12px 16px;
   background-position: left top;
   top: -12px;
+}
+#receipt:after {
+  background: linear-gradient(-225deg, #FFF 8px, red 8px, blue 8px, transparent 0), linear-gradient(225deg, #FFF 8px, transparent 0);
+  background-size: 12px 16px;
+  background-position: left bottom;
+  bottom: -12px;
 }
 #toolbar {
   position: sticky;
@@ -284,5 +297,17 @@ main {
 #totals > li {
   display: flex;
   justify-content: space-between;
+}
+footer {
+  height: 100px;
+  position: sticky;
+  bottom: 0;
+}
+footer > a {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  color: var(--color-text-mute);
 }
 </style>

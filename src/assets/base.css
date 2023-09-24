@@ -23,6 +23,7 @@
 :root {
   --color-background: var(--vt-c-ebony);
   --color-background-soft: var(--vt-c-ebony);
+  --color-background-dark: var(--vt-c-black);
   --color-background-mute: var(--vt-c-grey);
 
   --color-border: var(--vt-c-divider-dark-2);
@@ -55,7 +56,6 @@
 *::after {
   box-sizing: border-box;
   margin: 0;
-  font-weight: normal;
 }
 
 @font-face {
@@ -83,9 +83,6 @@ body {
   min-height: 100vh;
   color: var(--color-text);
   background: var(--color-background);
-  transition:
-    color 0.5s,
-    background-color 0.5s;
   line-height: 1.6;
   font-family:
     Bricolage,

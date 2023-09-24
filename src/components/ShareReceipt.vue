@@ -7,12 +7,12 @@ defineProps({
 <template>
   <main>
     <div id="url">
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M14 2H6C5.46957 2 4.96086 2.21071 4.58579 2.58579C4.21071 2.96086 4 3.46957 4 4V20C4 20.5304 4.21071 21.0391 4.58579 21.4142C4.96086 21.7893 5.46957 22 6 22H18C18.5304 22 19.0391 21.7893 19.4142 21.4142C19.7893 21.0391 20 20.5304 20 20V8L14 2Z" stroke="#CACBD0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-        <path d="M14 2V8H20" stroke="#CACBD0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-        <path d="M16 13H8" stroke="#CACBD0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-        <path d="M16 17H8" stroke="#CACBD0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-        <path d="M10 9H9H8" stroke="#CACBD0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M9.33366 1.3335H4.00033C3.6467 1.3335 3.30756 1.47397 3.05752 1.72402C2.80747 1.97407 2.66699 2.31321 2.66699 2.66683V13.3335C2.66699 13.6871 2.80747 14.0263 3.05752 14.2763C3.30756 14.5264 3.6467 14.6668 4.00033 14.6668H12.0003C12.3539 14.6668 12.6931 14.5264 12.9431 14.2763C13.1932 14.0263 13.3337 13.6871 13.3337 13.3335V5.3335L9.33366 1.3335Z" stroke="#CACBD0" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M9.33301 1.3335V5.3335H13.333" stroke="#CACBD0" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M10.6663 8.6665H5.33301" stroke="#CACBD0" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M10.6663 11.3335H5.33301" stroke="#CACBD0" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M6.66634 6H5.99967H5.33301" stroke="#CACBD0" stroke-linecap="round" stroke-linejoin="round"/>
       </svg>
       {{shortURL}}
     </div>
@@ -38,7 +38,7 @@ main {
   justify-content: space-between;
   align-items: center;
   height: 60px;
-  margin: 0 12px;
+  margin: 0 24px;
   padding: 0 24px;
   border-radius: 30px;
 }
@@ -49,8 +49,5 @@ main {
 }
 svg {
   margin-right: 12px;
-}
-#share {
-  font-weight: bold;
 }
 </style>

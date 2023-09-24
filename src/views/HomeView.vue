@@ -13,7 +13,14 @@ import ScanReceipt from '../components/ScanReceipt.vue'
           <ScanReceipt />
         </div>
         <div id="about" v-else>
-          Dotch is an app for <br> scanning receipts.
+          <div id="copy">
+            <h4>Dotch lets you scan, manage <br> and share physical receipts</h4>
+          </div>
+          <ul id="features">
+            <li>Scan receipts in seconds</li>
+            <li>Select and count line items</li>
+            <li>Share with anyone instantly</li>
+          </ul>
         </div>
     </Transition>
     </main>
@@ -25,7 +32,7 @@ import ScanReceipt from '../components/ScanReceipt.vue'
           <a href="mailto:dotch.app@gmail.com?subject=Help">Help</a>
         </div>
         <div id="closeAbout" v-else>
-          <button @click="toggleAbout">Close</button>
+          <a @click="toggleAbout">Close</a>
         </div>
       </Transition>
     </footer>
@@ -67,6 +74,28 @@ export default {
   #about {
     padding: 24px 36px;
     text-align: center;
+  }
+  #about ul {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 12px;
+  }
+  #about li {
+    border: solid 1px #7b7fa5;
+    box-shadow: 0 2px 3px rgba(0,0,0,0.2);
+    padding: 12px 16px;
+    border-radius: 36px;
+    font-size: 18px;
+    color: #7b7fa5;
+  }
+  #about h4 {
+    font-size: 18px;
+  }
+  #copy {
+    margin-bottom: 24px;
   }
   footer {
     height: 60px;
