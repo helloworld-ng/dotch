@@ -16,7 +16,7 @@ import ReceiptItem from '../components/ReceiptItem.vue'
       <p id="date">{{ receipt.date }}</p>
     </div>
    </Transition>
-   <Transition name="slide-down" appear>
+   <Transition name="slide-up" appear>
     <ShareReceipt :id="receipt.id" />
   </Transition>
   </header>

@@ -5,18 +5,14 @@
     <div id="loading" v-if="isLoading">
       <div class="spinner"></div>
     </div>
-    <Transition name="slide-up" appear>
-      <footer>
-        <div v-if="!isLoading && !isPhotoTaken">
-          <button class="secondary" @click="closeCamera">Cancel</button>
-          <button @click="capturePhoto">Capture</button>
-        </div>
-        <div v-if="isPhotoTaken">
-          <button class="secondary" @click="resetCamera">Reset</button>
-          <button class="success" @click="completeCapture">Scan</button>
-        </div>
-      </footer>
-    </Transition>
+    <footer>
+      <button class="secondary" v-if="!isPhotoTaken" @click="closeCamera">Cancel</button>
+      <button class="secondary" v-else @click="resetCamera">Retake</button>
+      <Transition name="slide-up" mode="out-in">
+      <button v-if="!isLoading && !isPhotoTaken" @click="capturePhoto">Capture</button>
+      <button v-else-if="isPhotoTaken" class="success" @click="completeCapture">Scan</button>
+      </Transition>
+    </footer>
   </main>
 </template>
 
@@ -103,8 +99,6 @@ footer {
   left: 0;
   right: 0;
   bottom: 0;
-}
-footer > div {
   display: flex;
   justify-content: center;
   align-items: center;
