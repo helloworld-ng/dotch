@@ -10,7 +10,7 @@
       <button class="secondary" v-else @click="resetCamera">Retake</button>
       <Transition name="slide-up" mode="out-in">
       <button v-if="!isLoading && !isPhotoTaken" @click="capturePhoto">Capture</button>
-      <button v-else-if="isPhotoTaken" class="success" @click="completeCapture">Scan</button>
+      <button v-else-if="isPhotoTaken" class="danger" @click="completeCapture">Scan</button>
       </Transition>
     </footer>
   </main>

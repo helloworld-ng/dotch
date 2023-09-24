@@ -79,8 +79,8 @@ button.secondary {
   background: rgb(25 26 38 / 26%);
 }
 
-button.success {
-  background: #08C4B2;
+button.danger {
+  background: var(--vt-c-red);
 }
 
 nav {
