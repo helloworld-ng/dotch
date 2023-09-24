@@ -1,5 +1,5 @@
 <template>
-  <main>
+  <div id="webcam">
     <video ref="camera" autoplay playsinline v-show="!isPhotoTaken"></video>
     <canvas ref="canvas" v-show="isPhotoTaken"></canvas>
     <div id="loading" v-if="isLoading">
@@ -13,7 +13,7 @@
       <button v-else-if="isPhotoTaken" class="danger" @click="completeCapture">Scan</button>
       </Transition>
     </footer>
-  </main>
+  </div>
 </template>
 
 <script>
@@ -82,7 +82,7 @@ export default {
 </script>
 
 <style scoped>
-main {
+#webcam {
   width: 100%;
   height: auto;
 }

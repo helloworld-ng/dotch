@@ -10,14 +10,14 @@ defineProps({
 </script>
 
 <template>
-  <main :class="{'selected': selected}">
+  <div class="item" :class="{'selected': selected}">
     <div>{{count}} × {{ name }}</div>
     <div>{{ amount }}</div>
-  </main>
+  </div>
 </template>
 
 <style scoped>
-  main {
+  .item {
     padding: 12px 24px;
     border: solid 1px var(--vt-c-white-mute);
     display: flex;
@@ -25,7 +25,7 @@ defineProps({
     border-radius: 8px;
     color: var(--vt-c-grey);
   }
-  main.selected {
+  .item.selected {
     background-color: var(--vt-c-white-soft);
     color: var(--vt-c-text-light-1);
   }
