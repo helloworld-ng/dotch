@@ -13,7 +13,7 @@ import ReceiptItem from '../components/ReceiptItem.vue'
    <Transition name="fade" appear>
     <div id="title">
       <h3>{{ receipt.title }}</h3>
-      <p>{{ receipt.date }}</p>
+      <p id="date">{{ receipt.date }}</p>
     </div>
    </Transition>
    <Transition name="slide-up" appear>
@@ -214,6 +214,9 @@ header {
   align-items: center;
   margin: 30px 24px;
 }
+#date {
+  color: var(--color-text-mute)
+}
 main {
   position: sticky;
   top: 0;
@@ -230,15 +233,15 @@ main {
 #receipt:before {
   content: " ";
   display: block;
-  height: 24px;
+  height: 12px;
   width: 100%;
   position: absolute;
   z-index: 0;
   left: 0;
-  background: linear-gradient(-45deg, #FFF 16px, red 16px, blue 16px, transparent 0), linear-gradient(45deg, #FFF 16px, transparent 0);
-  background-size: 22px 32px;
+  background: linear-gradient(-45deg, #FFF 8px, red 8px, blue 8px, transparent 0), linear-gradient(45deg, #FFF 8px, transparent 0);
+  background-size: 12px 16px;
   background-position: left top;
-  top: -24px;
+  top: -12px;
 }
 #toolbar {
   position: sticky;
@@ -272,7 +275,8 @@ main {
 }
 #totals {
   list-style: none;
-  padding: 24px;
+  padding: 0 12px;
+  margin-top: 24px;
   display: flex;
   flex-direction: column;
   gap: 8px;

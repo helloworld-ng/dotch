@@ -8,7 +8,7 @@ import ScanReceipt from '../components/ScanReceipt.vue'
       <img alt="Dotch logo" src="../assets/logo.svg" />
     </nav>
     <main>
-      <Transition name="fade" mode="out-in">
+      <Transition name="fade" mode="out-in" appear>
         <div id="scan" v-if="!aboutVisible">
           <ScanReceipt />
         </div>
@@ -18,7 +18,7 @@ import ScanReceipt from '../components/ScanReceipt.vue'
     </Transition>
     </main>
     <footer>
-      <Transition name="slide-up" mode="out-in">
+      <Transition name="slide-up" mode="out-in" appear>
         <div id="nav" v-if="!aboutVisible">
           <a @click="toggleAbout">About</a>
           <div class="divider"></div>
