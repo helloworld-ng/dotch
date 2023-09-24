@@ -29,7 +29,14 @@ import CopyToClipboard from '../components/CopyToClipboard.vue'
             Tap items to add up
           </div>
           <div id="metadata" v-else>
-            <div id="count">{{ selectedItems.length }} {{ selectedItems.length == 1 ? 'item' : 'items' }}</div>
+            <div id="count" @click="resetCount">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M4 1.3335L2 4.00016V13.3335C2 13.6871 2.14048 14.0263 2.39052 14.2763C2.64057 14.5264 2.97971 14.6668 3.33333 14.6668H12.6667C13.0203 14.6668 13.3594 14.5264 13.6095 14.2763C13.8595 14.0263 14 13.6871 14 13.3335V4.00016L12 1.3335H4Z" stroke="#191A26" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M2 4H14" stroke="#191A26" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M10.6663 6.6665C10.6663 7.37375 10.3854 8.05203 9.88529 8.55212C9.3852 9.05222 8.70692 9.33317 7.99967 9.33317C7.29243 9.33317 6.61415 9.05222 6.11406 8.55212C5.61396 8.05203 5.33301 7.37375 5.33301 6.6665" stroke="#191A26" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              {{ selectedItems.length }}
+            </div>
             <div id="subtotal">
               <CopyToClipboard :text="subtotal" />
             </div>
@@ -89,6 +96,12 @@ export default {
       } else {
         this.selectedItems = this.selectedItems.filter(i => i.name !== item.name);
       }
+    },
+    resetCount() {
+      this.items.forEach(item => {
+        item.selected = false;
+      });
+      this.selectedItems = [];
     }
   },
   created() {
@@ -267,7 +280,7 @@ main {
   flex-direction: column;
   gap: 10px;
 }
-#subtotal {
+#subtotal, #count {
   display: flex;
   justify-content: center;
   align-items: center;
