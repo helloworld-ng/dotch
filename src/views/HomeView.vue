@@ -9,7 +9,7 @@ import ScanReceipt from '../components/ScanReceipt.vue'
     </nav>
     <main>
       <Transition name="fade" appear>
-      <ScanReceipt />
+      <div><ScanReceipt /></div>
       </Transition>
     </main>
     <footer>
