@@ -6,13 +6,19 @@ import ReceiptItem from '../components/ReceiptItem.vue'
 <template>
   <header>
     <nav>
-      <img alt="Dotch logo" src="../assets/logo.svg" />
+      <a href="/">
+        <img alt="Dotch logo" src="../assets/logo.svg" />
+      </a>
     </nav>
+   <Transition name="fade" appear>
     <div id="title">
       <h3>{{ receipt.title }}</h3>
       <p>{{ receipt.date }}</p>
     </div>
+   </Transition>
+   <Transition name="slide-up" appear>
     <ShareReceipt :id="receipt.id" />
+  </Transition>
   </header>
   <main>
     <div id="receipt">
@@ -199,7 +205,7 @@ export default {
 
 <style scoped>
 header {
-  padding: 0 0 30px;
+  padding: 0 0 60px;
 }
 #title {
   display: flex;
@@ -220,6 +226,19 @@ main {
   font-size: 15px;
   padding: 0 24px 30px;
   z-index: 10;
+}
+#receipt:before {
+  content: " ";
+  display: block;
+  height: 24px;
+  width: 100%;
+  position: absolute;
+  z-index: 0;
+  left: 0;
+  background: linear-gradient(-45deg, #FFF 16px, red 16px, blue 16px, transparent 0), linear-gradient(45deg, #FFF 16px, transparent 0);
+  background-size: 22px 32px;
+  background-position: left top;
+  top: -24px;
 }
 #toolbar {
   position: sticky;

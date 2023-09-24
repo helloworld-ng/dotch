@@ -53,6 +53,7 @@ export default {
     flex-direction: column;
     justify-content: space-between;
     height: 100%;
+    overflow: hidden;
   }
   nav {
     z-index: 100;

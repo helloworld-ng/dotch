@@ -10,7 +10,7 @@ defineProps({})
     <main>
       <div class="spinner" v-if="loading"></div>
     </main>
-    <Transition name="fade">
+    <Transition name="slide-down">
     <footer v-if="!loading">
       <button class="secondary" @click="closeLens">Cancel</button>
       <button @click="scan">Scan</button>
