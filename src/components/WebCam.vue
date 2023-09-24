@@ -1,6 +1,6 @@
 <template>
   <main>
-    <video ref="camera" autoplay v-show="!isPhotoTaken"></video>
+    <video ref="camera" autoplay playsinline v-show="!isPhotoTaken"></video>
     <canvas ref="canvas" v-show="isPhotoTaken"></canvas>
     <div id="loading" v-if="isLoading">
       <div class="spinner"></div>
