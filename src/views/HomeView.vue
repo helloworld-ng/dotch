@@ -14,8 +14,7 @@ import ScanReceipt from '../components/ScanReceipt.vue'
         </div>
         <div id="about" v-else>
           <div id="copy">
-            <h4>An app for your receipts</h4>
-            <p>Dotch lets you digitise and <br> share your purchases. </p>
+            <h4>Dotch lets you digitise and <br> share your receipts.</h4>
           </div>
           <ul id="features">
             <li>Scan receipts with AI</li>
