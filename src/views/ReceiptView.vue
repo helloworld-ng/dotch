@@ -45,6 +45,20 @@ import ReceiptItem from '../components/ReceiptItem.vue'
       <div id="items">
         <ReceiptItem v-for="item in items" :key="item.key" v-bind="item" @click="toggleItem(item)" />
       </div>
+      <ul id="totals">
+        <li>
+          <span>Subtotal</span>
+          <span>{{ receipt.metadata.subtotal }}</span>
+        </li>
+        <li>
+          <span>Fees</span>
+          <span>{{ receipt.metadata.fees }}</span>
+        </li>
+        <li>
+          <span>Total</span>
+          <span>{{ receipt.metadata.total }}</span>
+        </li>
+      </ul>
     </div>
   </main>
 </template>
@@ -68,7 +82,7 @@ export default {
       return this.items.reduce((acc, item) => {
         return acc + item.amount;
       }, 0);
-    }
+    },
   },
   methods: {
     toggleItem(item) {
@@ -84,7 +98,6 @@ export default {
   created() {
     this.receipt = {
       id: this.$route.params.id,
-      title: "The Orchid Bistro",
       date: "September 12, 2023",
       items: [{
         type: "product",
@@ -163,6 +176,12 @@ export default {
         currency: "N",
         amount: 1577.00
       }],
+      metadata: {
+        subtotal: 40800.00,
+        fees: 9245.00,
+        total: 40800.00
+      },
+      title: "The Orchid Bistro",
       url: "https://cloudinary.image"
     };
     let counter = 0;
@@ -231,5 +250,16 @@ main {
   justify-content: center;
   align-items: center;
   gap: 10px;
+}
+#totals {
+  list-style: none;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+#totals > li {
+  display: flex;
+  justify-content: space-between;
 }
 </style>
