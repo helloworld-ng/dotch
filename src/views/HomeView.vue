@@ -14,12 +14,12 @@ import ScanReceipt from '../components/ScanReceipt.vue'
         </div>
         <div id="about" v-else>
           <div id="copy">
-            <h4>Dotch lets you scan, manage <br> and share physical receipts</h4>
+            <h4>Dotch helps you manage and share physical receipts</h4>
           </div>
           <ul id="features">
-            <li>Scan receipts in seconds</li>
-            <li>Select and count line items</li>
-            <li>Share with anyone instantly</li>
+            <li>Scan receipts using AI</li>
+            <li>Select and count items</li>
+            <li>Share link with anyone</li>
           </ul>
         </div>
     </Transition>
