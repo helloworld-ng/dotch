@@ -1,5 +1,5 @@
 <script setup>
-import ShareReceipt from '../components/ShareReceipt.vue'
+import ShareText from '../components/ShareText.vue'
 import ReceiptItem from '../components/ReceiptItem.vue'
 import CopyToClipboard from '../components/CopyToClipboard.vue'
 </script>
@@ -11,15 +11,11 @@ import CopyToClipboard from '../components/CopyToClipboard.vue'
         <img alt="Dotch logo" src="../assets/logo.svg" />
       </a>
     </nav>
-   <Transition name="fade" appear>
     <div id="title">
       <h3>{{ receipt.title }}</h3>
       <p id="date">{{ receipt.date }}</p>
     </div>
-   </Transition>
-   <Transition name="slide-up" appear>
-    <ShareReceipt :id="receipt.id" />
-  </Transition>
+    <ShareText :value="longURL" :display="shortURL" title="Dotch" text="Check out my receipt" />
   </header>
   <main>
     <div id="receipt">
@@ -77,6 +73,12 @@ export default {
     };
   },
   computed: {
+    shortURL() {
+      return `dotch.app/bill/${this.receipt.id}`;
+    },
+    longURL() {
+      return `https://dotch.app/bill/${this.receipt.id}`;
+    },
     subtotal() {
       return this.selectedItems.reduce((acc, item) => {
         return acc + parseInt(item.amount);
