@@ -67,7 +67,7 @@
 
 @font-face {
   font-family: Bricolage;
-  src: url('fonts/bricolage-medium.ttf') format('truetype');
+  src: url('fonts/bricolage-bold.ttf') format('truetype');
   font-weight: bold;
   font-style: normal;
 }
@@ -78,7 +78,6 @@
   font-weight: normal;
   font-style: normal;
 }
-
 
 body {
   min-height: 100vh;

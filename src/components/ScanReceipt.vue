@@ -3,13 +3,19 @@ defineProps({})
 </script>
 
 <template>
-  <div id="cover" @click="openLens" :class="{'scaled': scaleLensCover}">Tap to scan</div>
+  <div id="cover" @click="openLens" :class="{'scaled': scaleLensCover}">
+    Tap to scan
+  </div>
   <div id="lens" v-if="showLens">
-    <main></main>
-    <footer>
+    <main>
+      <div class="spinner" v-if="loading"></div>
+    </main>
+    <Transition name="fade">
+    <footer v-if="!loading">
       <button class="secondary" @click="closeLens">Cancel</button>
       <button @click="scan">Scan</button>
     </footer>
+    </Transition>
   </div>
 </template>
 
@@ -18,7 +24,8 @@ export default {
   data() {
     return {
       scaleLensCover: false,
-      showLens: false
+      showLens: false,
+      loading: false
     };
   },
   methods: {
@@ -32,7 +39,14 @@ export default {
       this.showLens = false;
       this.scaleLensCover = false;
     },
-    scan() {}
+    scan() {
+      this.loading = true;
+      setTimeout(() => {
+        this.loading = false;
+        this.closeLens();
+        this.$router.push('/bill/123');
+      }, 1000);
+    }
   }
 };
 </script>
@@ -62,6 +76,9 @@ export default {
   height: 100%;
   background: red;
   z-index: 10;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 footer {
   height: 60px;

@@ -4,9 +4,9 @@ import ScanReceipt from '../components/ScanReceipt.vue'
 
 <template>
   <div id="home">
-    <header>
+    <nav>
       <img alt="Dotch logo" src="../assets/logo.svg" />
-    </header>
+    </nav>
     <main>
       <Transition name="fade" mode="out-in">
         <div id="scan" v-if="!aboutVisible">
@@ -54,7 +54,7 @@ export default {
     justify-content: space-between;
     height: 100%;
   }
-  header {
+  nav {
     z-index: 100;
   }
   main {

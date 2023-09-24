@@ -1,5 +1,7 @@
 @import './base.css';
 
+/* Layout */
+
 body {
   overflow: hidden;
 }
@@ -15,6 +17,35 @@ body {
   height: 100%;
   overflow: scroll;
 }
+
+/* Type */
+h3 {
+  font-weight: bold;
+}
+
+/* Transitions */
+
+.slide-up-enter-active, .slide-up-leave-active {
+  transition: all 0.25s ease-out;
+}
+.slide-up-enter-from {
+  opacity: 0;
+  transform: translateY(30px);
+}
+.slide-up-leave-to {
+  opacity: 0;
+  transform: translateY(-30px);
+}
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.25s ease;
+}
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+
+/* Native components */
 
 a {
   text-decoration: none;
@@ -37,30 +68,26 @@ button.secondary {
   background: rgb(25 26 38 / 26%);
 }
 
-header {
+nav {
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100px;
 }
 
-/* Transitions */
-.slide-up-enter-active, .slide-up-leave-active {
-  transition: all 0.25s ease-out;
+/* Custom Components */
+
+/* Spinner */
+.spinner {
+  width: 40px;
+  height: 40px;
+  border: 2px solid rgba(0, 0, 0, 0.1);
+  border-left: 2px solid var(--vt-c-white);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
 }
-.slide-up-enter-from {
-  opacity: 0;
-  transform: translateY(30px);
-}
-.slide-up-leave-to {
-  opacity: 0;
-  transform: translateY(-30px);
-}
-.fade-enter-active,
-.fade-leave-active {
-  transition: opacity 0.25s ease;
-}
-.fade-enter-from,
-.fade-leave-to {
-  opacity: 0;
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
