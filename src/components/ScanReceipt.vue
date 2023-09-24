@@ -47,6 +47,7 @@ export default {
 
 <style scoped>
 #cover {
+  cursor: pointer;
   width: 265px;
   height: 265px;
   left: 0px;

@@ -3,6 +3,7 @@ import HomeView from '../views/HomeView.vue'
 import ReceiptView from '../views/ReceiptView.vue'
 import AboutView from '../views/AboutView.vue'
 import HelpView from '../views/HelpView.vue'
+import LostView from '../views/LostView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -11,7 +12,7 @@ const router = createRouter({
       path: '/',
       name: 'home',
       component: HomeView
-    }, {
+    },{
       path: '/bill/:id',
       name: 'bill',
       component: ReceiptView
@@ -23,6 +24,10 @@ const router = createRouter({
       path: '/help',
       name: 'help',
       component: HelpView
+    }, 
+    { 
+      path: '/:pathMatch(.*)',
+      component: LostView
     }
   ]
 })
