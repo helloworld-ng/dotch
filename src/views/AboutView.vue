@@ -1,3 +1,6 @@
+<script setup>
+  import AudioCard from '../components/AudioCard.vue';
+</script>
 <template>
   <div class="frame">
     <nav>
@@ -7,12 +10,13 @@
       <Transition name="fade" appear>
       <div id="about">
         <div id="tagline">
-          <h4>Dotch lets you digitise and <br> share your receipts</h4>
+          <h4>An app for receipts</h4>
+          <p>What you can do with Dotch</p>
         </div>
         <ul id="features">
-          <li>Scan receipts with AI</li>
-          <li>Select and count items</li>
-          <li>Share link with anyone</li>
+          <li><AudioCard text="Split dinner with friends" source="./audio/01-dinner.mp3" /></li>
+          <li><AudioCard text="Share receipts with anyone" source="./audio/02-fashion.mp3"  /></li>
+          <li><AudioCard text="Group bill into categories" source="./audio/03-groups.mp3"  /></li>
         </ul>
       </div>
       </Transition>
@@ -29,7 +33,7 @@
 
 <style scoped>
   #about {
-    padding: 24px 36px;
+    width: 300px;
     text-align: center;
     display: flex;
     flex-direction: column;
@@ -42,13 +46,5 @@
     flex-direction: column;
     gap: 8px;
     margin-top: 12px;
-  }
-  #features li {
-    border: solid 1px #7b7fa5;
-    box-shadow: 0 2px 3px rgba(0,0,0,0.2);
-    padding: 12px 16px;
-    border-radius: 36px;
-    font-size: 18px;
-    color: #7b7fa5;
   }
 </style>

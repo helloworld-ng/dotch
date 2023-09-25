@@ -28,6 +28,34 @@
   transform: translateY(30px);
 }
 
+.slide-left-enter-active, .slide-left-leave-active {
+  transition: all 0.25s ease-out;
+}
+
+.slide-left-enter-from {
+  opacity: 0;
+  transform: translateX(10px);
+}
+
+.slide-left-leave-to {
+  opacity: 0;
+  transform: translateX(-10px);
+}
+
+.slide-right-enter-active, .slide-right-leave-active {
+  transition: all 0.25s ease-out;
+}
+
+.slide-right-enter-from {
+  opacity: 0;
+  transform: translateX(-10px);
+}
+
+.slide-right-leave-to {
+  opacity: 0;
+  transform: translateX(10px);
+}
+
 .fade-enter-active,
 .fade-leave-active {
   transition: opacity 0.25s ease;
