@@ -2,6 +2,7 @@
 import ShareText from '../components/ShareText.vue'
 import ReceiptItem from '../components/ReceiptItem.vue'
 import CopyToClipboard from '../components/CopyToClipboard.vue'
+import mockData from '../mock.json'
 </script>
 
 <template>
@@ -11,9 +12,9 @@ import CopyToClipboard from '../components/CopyToClipboard.vue'
         <img alt="Dotch logo" src="../assets/logo.svg" />
       </a>
     </nav>
-    <div id="title">
-      <h3>{{ receipt.title }}</h3>
-      <p id="date">{{ receipt.date }}</p>
+    <div id="merchant">
+      <h3>{{ metadata.merchant }}</h3>
+      <p id="date">{{ metadata.date }}</p>
     </div>
     <ShareText :value="longURL" :display="shortURL" title="Dotch" text="Check out my receipt" />
   </header>
@@ -45,15 +46,15 @@ import CopyToClipboard from '../components/CopyToClipboard.vue'
       <ul id="totals">
         <li>
           <span>Subtotal</span>
-          <span>{{ receipt.metadata.subtotal }}</span>
+          <span>{{ metadata.subtotal }}</span>
         </li>
         <li>
-          <span>Fees</span>
-          <span>{{ receipt.metadata.fees }}</span>
+          <span>Tax</span>
+          <span>{{ metadata.tax }}</span>
         </li>
         <li>
           <span>Total</span>
-          <span>{{ receipt.metadata.total }}</span>
+          <span>{{ metadata.total }}</span>
         </li>
       </ul>
     </div>
@@ -69,25 +70,22 @@ export default {
     return {
       receipt: null,
       items: [],
+      metadata: {},
       selectedItems: [],
     };
   },
   computed: {
     shortURL() {
-      return `dotch.app/bill/${this.receipt.id}`;
+      return `dotch.app/bill/${this.metadata.id}`;
     },
     longURL() {
-      return `https://dotch.app/bill/${this.receipt.id}`;
+      return `https://dotch.app/bill/${this.metadata.id}`;
     },
     subtotal() {
-      return this.selectedItems.reduce((acc, item) => {
-        return acc + parseInt(item.amount);
-      }, 0);
-    },
-    total() {
-      return this.items.reduce((acc, item) => {
+      let subtotal = this.selectedItems.reduce((acc, item) => {
         return acc + item.amount;
       }, 0);
+      return `${ this.metadata.currency} ${ subtotal.toFixed(2) }`;
     },
   },
   methods: {
@@ -107,96 +105,16 @@ export default {
     }
   },
   created() {
-    this.receipt = {
-      id: this.$route.params.id,
-      date: "September 12, 2023",
-      items: [{
-        type: "product",
-        count: 1,
-        name: "Hot Chocolate",
-        currency: "N",
-        amount: 1500.00
-      },
-      {
-        type: "product",
-        count: 1,
-        name: "Water",
-        currency: "N",
-        amount: 1000.00
-      },
-      {
-        type: "product",
-        count: 1,
-        name: "Lamb Chops",
-        currency: "N",
-        amount: 11500.00
-      },
-      {
-        type: "product",
-        count: 1,
-        name: "Pork Chops",
-        currency: "N",
-        amount: 9500.00
-      },
-      {
-        type: "product",
-        count: 1,
-        name: "Shepherd's Pie",
-        currency: "N",
-        amount: 3500.00
-      },
-      {
-        type: "product",
-        count: 1,
-        name: "Mango Smoothie",
-        currency: "N",
-        amount: 2500.00
-      },
-      {
-        type: "product",
-        count: 1,
-        name: "Cheesecake",
-        currency: "N",
-        amount: 3000.00
-      },
-      {
-        type: "product",
-        count: 1,
-        name: "The Bistro Classic",
-        currency: "N",
-        amount: 3000.00
-      },
-      {
-        type: "fee",
-        count: 1,
-        name: "Service Charge",
-        currency: "N",
-        amount: 5300.00
-      },
-      {
-        type: "fee",
-        count: 1,
-        name: "VAT",
-        currency: "N",
-        amount: 2368.00
-      },
-      {
-        type: "fee",
-        count: 1,
-        name: "State Tax",
-        currency: "N",
-        amount: 1577.00
-      }],
-      metadata: {
-        subtotal: 40800.00,
-        fees: 9245.00,
-        total: 40800.00
-      },
-      title: "The Orchid Bistro",
-      url: "https://cloudinary.image"
-    };
+    this.receipt = mockData;
+    let { prediction } = mockData;
+    let { supplier_name, locale, line_items, total_tax, total_amount } = prediction;
+    let items = line_items.map(line_item => ({
+      count: line_item.quantity || 1,
+      name: line_item.description,
+      amount: line_item.total_amount,
+    }));
     let counter = 0;
-    this.items = this.receipt.items.map(item => {
+    this.items = items.map(item => {
       counter++;
       return {
         ...item,
@@ -204,6 +122,18 @@ export default {
         key: counter,
       };
     });
+    let subtotal = items.reduce((acc, item) => {
+      return acc + item.amount;
+    }, 0);
+    this.metadata = {
+      id: this.$route.params.id,
+      merchant: supplier_name.raw_value,
+      date: new Date(prediction.date.value).toLocaleDateString(),
+      currency: locale.currency,
+      subtotal: subtotal.toFixed(2),
+      tax: parseFloat(total_tax.value || 0).toFixed(2),
+      total: parseFloat(total_amount.value).toFixed(2),
+    };
   }
 };
 </script>
@@ -214,7 +144,7 @@ header {
   position: sticky;
   top: 0;
 }
-#title {
+#merchant {
   display: flex;
   justify-content: center;
   flex-direction: column;
