@@ -42,48 +42,9 @@
   margin: 0;
 }
 
-@font-face {
-  font-family: Bricolage;
-  src: url('fonts/bricolage-regular.ttf') format('truetype');
-  font-weight: normal;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: Bricolage;
-  src: url('fonts/bricolage-bold.ttf') format('truetype');
-  font-weight: bold;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: Roboto Mono;
-  src: url('fonts/robotomono-regular.ttf') format('truetype');
-  font-weight: normal;
-  font-style: normal;
-}
-
 body {
   min-height: 100vh;
   color: var(--color-text);
   background: var(--color-background);
   line-height: 1.6;
-  font-family:
-    Bricolage,
-    Inter,
-    -apple-system,
-    BlinkMacSystemFont,
-    'Segoe UI',
-    Roboto,
-    Oxygen,
-    Ubuntu,
-    Cantarell,
-    'Fira Sans',
-    'Droid Sans',
-    'Helvetica Neue',
-    sans-serif;
-  font-size: 18px;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
 }
