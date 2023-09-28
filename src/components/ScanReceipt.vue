@@ -1,14 +1,15 @@
 <script setup>
 import WebCam from '../components/WebCam.vue'
+import axios from 'axios'
 </script>
 
 <template>
   <div id="cover" @click="openLens" :class="{'scaled': isLensCoverScaled}">
-    <span v-if="!url">Tap to scan</span>
+    <span v-if="!file">Tap to scan</span>
     <div v-else class="spinner"></div>
   </div>
   <div id="lens" v-if="isLensOpen">
-    <WebCam @close="closeLens" @capture="scanImage"  />
+    <WebCam @close="closeLens" @capture="onImageCapture"  />
   </div>
 </template>
 
@@ -16,7 +17,7 @@ import WebCam from '../components/WebCam.vue'
 export default {
   data() {
     return {
-      url: null,
+      file: null,
       isLensCoverScaled: false,
       isLensOpen: false,
       isLoading: false
@@ -33,15 +34,29 @@ export default {
       this.isLensOpen = false;
       this.isLensCoverScaled = false;
     },
-    scanImage(url) {
-      this.url = url;
+    async onImageCapture(file) {
+      this.file = file;
       this.closeLens();
-      setTimeout(() => {
-        this.isLoading = false;
-        this.$router.push('/bill/123');
-      }, 1000);
-    }
-  }
+      let formData = new FormData();
+      formData.append('file', this.file);
+      try {
+        const response = await axios.post(
+          'https://dotch.glitch.me/scan',
+          formData,
+          {
+            headers: {
+              'Content-Type': 'multipart/form-data',
+            },
+          }
+        );
+        console.log(response);
+        this.$router.push(`/receipt/${response.id}`);
+      } catch (error) {
+        this.openLens();
+        console.error(error);
+      }
+    },
+  },
 };
 </script>
 

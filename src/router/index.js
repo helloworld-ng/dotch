@@ -13,8 +13,9 @@ const router = createRouter({
       name: 'home',
       component: HomeView
     },{
-      path: '/bill/:id',
-      name: 'bill',
+      path: '/receipt/:id',
+      name: 'receipt',
+      props: true,
       component: ReceiptView
     }, {
       path: '/about',

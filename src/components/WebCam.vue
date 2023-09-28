@@ -66,7 +66,7 @@ export default {
       this.$refs.canvas
         .getContext('2d')
         .drawImage(this.$refs.camera, 0, 0);
-      this.url = this.$refs.canvas.toDataURL('image/png');
+      this.url = this.$refs.canvas.toDataURL('image/jpeg');
       this.isPhotoTaken = true;
       this.stopCamera();
     },
@@ -75,7 +75,7 @@ export default {
       this.openCamera();
     },
     completeCapture() {
-      this.$emit('capture', this.url);
+      this.$emit('capture', this.url.split(';base64,')[1]);
     },
   },
 };
