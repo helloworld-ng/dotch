@@ -4,12 +4,16 @@ import axios from 'axios'
 </script>
 
 <template>
-  <div id="cover" @click="openLens" :class="{'scaled': isLensCoverScaled}">
-    <span v-if="!file">Tap to scan</span>
-    <div v-else class="spinner"></div>
+  <div id="cover" @click="openWebcam" :class="{'scaled': isLensCoverScaled}">
+    <span v-if="!isScanning">Tap to scan</span>
+    <div v-else>
+      <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M40 12L18 34L8 24" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
   </div>
-  <div id="lens" v-if="isLensOpen">
-    <WebCam @close="closeLens" @capture="onImageCapture"  />
+  <div id="lens" v-if="isWebcamOpen">
+    <WebCam ref="cam1" @close="closeWebcam" @capture="onImageCapture" :processing="isScanning" :error="scanError"  />
   </div>
 </template>
 
@@ -17,28 +21,27 @@ import axios from 'axios'
 export default {
   data() {
     return {
-      file: null,
       isLensCoverScaled: false,
-      isLensOpen: false,
-      isLoading: false
+      isWebcamOpen: false,
+      isScanning: false,
+      scanError: null
     };
   },
   methods: {
-    openLens() {
+    openWebcam() {
       this.isLensCoverScaled = true;
       setTimeout(() => {
-        this.isLensOpen = true;
+        this.isWebcamOpen = true;
       }, 300);
     },
-    closeLens() {
-      this.isLensOpen = false;
+    closeWebcam() {
+      this.isWebcamOpen = false;
       this.isLensCoverScaled = false;
     },
     async onImageCapture(file) {
-      this.file = file;
-      this.closeLens();
+      this.isScanning = true;
       let formData = new FormData();
-      formData.append('file', this.file);
+      formData.append('file', file);
       try {
         const response = await axios.post(
           'https://dotch.glitch.me/scan',
@@ -49,11 +52,19 @@ export default {
             },
           }
         );
-        console.log(response);
-        this.$router.push(`/receipt/${response.id}`);
+        this.closeWebcam();
+        setTimeout(() => {
+          const receipt = response.data.data;
+          this.$router.push(`/receipt/${receipt.id}`);
+        }, 500);
       } catch (error) {
-        this.openLens();
-        console.error(error);
+        this.scanError = 'Please try another image';
+        setTimeout(() => {
+          this.scanError = null;
+          this.isScanning = false;
+          this.$refs.cam1.resetCamera();
+          this.openWebcam();
+        }, 2000);
       }
     },
   },

@@ -1,9 +1,7 @@
 <script setup>
 defineProps({
-  type: String,
-  count: Number,
-  name: String,
-  currency: String,
+  quantity: Number,
+  description: String,
   amount: Number,
   selected: Boolean
 })
@@ -11,7 +9,7 @@ defineProps({
 
 <template>
   <div class="item" :class="{'selected': selected}">
-    <div>{{count}} × {{ name }}</div>
+    <div>{{quantity || 1}} × {{ description }}</div>
     <div>{{ amount }}</div>
   </div>
 </template>

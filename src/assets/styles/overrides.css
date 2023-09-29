@@ -25,6 +25,11 @@ button.danger {
   background: var(--vt-c-red);
 }
 
+button:disabled {
+  pointer-events: none;
+  opacity: 0.5;
+}
+
 nav {
   display: flex;
   justify-content: center;

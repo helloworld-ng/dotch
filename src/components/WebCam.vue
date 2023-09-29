@@ -1,23 +1,35 @@
 <template>
   <div id="webcam">
+    <div id="overlay" v-if="error || isLoading">
+      <div class="spinner" v-if="isLoading"></div>
+      <div v-if="error">{{ error }}</div>
+    </div>
     <video ref="camera" autoplay playsinline v-show="!isPhotoTaken"></video>
     <canvas ref="canvas" v-show="isPhotoTaken"></canvas>
-    <div id="loading" v-if="isLoading">
-      <div class="spinner"></div>
-    </div>
-    <footer>
-      <button class="secondary" v-if="!isPhotoTaken" @click="closeCamera">Cancel</button>
-      <button class="secondary" v-else @click="resetCamera">Retake</button>
-      <Transition name="slide-up" mode="out-in">
-      <button v-if="!isLoading && !isPhotoTaken" @click="capturePhoto">Capture</button>
-      <button v-else-if="isPhotoTaken" class="danger" @click="completeCapture">Scan</button>
-      </Transition>
+    <footer v-if="!isLoading">
+      <div v-if="processing">
+        <Transition name="slide-up" mode="out-in">
+          <div class="spinner"></div>
+        </Transition>
+      </div>
+      <div v-if="!processing">
+        <button class="secondary" v-if="!isPhotoTaken" @click="exitCamera">Cancel</button>
+        <button class="secondary" v-else @click="resetCamera">Retake</button>
+        <Transition name="slide-up" mode="out-in">
+        <button v-if="!isPhotoTaken" @click="capturePhoto">Capture</button>
+        <button v-else class="danger" @click="publishPhoto">Scan</button>
+        </Transition>
+      </div>
     </footer>
   </div>
 </template>
 
 <script>
 export default {
+  props: {
+    error: String,
+    processing: Boolean,
+  },
   data() {
     return {
       url: null,
@@ -55,27 +67,30 @@ export default {
         track.stop();
       });
     },
-    closeCamera() {
+    exitCamera() {
       this.stopCamera();
       this.isCameraOpen = false;
       this.$emit('close');
     },
-    capturePhoto() {
+    getImageFromCamera() {
       this.$refs.canvas.width = this.$refs.camera.videoWidth;
       this.$refs.canvas.height = this.$refs.camera.videoHeight;
       this.$refs.canvas
         .getContext('2d')
         .drawImage(this.$refs.camera, 0, 0);
       this.url = this.$refs.canvas.toDataURL('image/jpeg');
-      this.isPhotoTaken = true;
+    },
+    capturePhoto() {
+      this.getImageFromCamera();
       this.stopCamera();
+      this.isPhotoTaken = true;
+    },
+    publishPhoto() {
+      this.$emit('capture', this.url);
     },
     resetCamera() {
       this.isPhotoTaken = false;
       this.openCamera();
-    },
-    completeCapture() {
-      this.$emit('capture', this.url.split(';base64,')[1]);
     },
   },
 };
@@ -85,6 +100,18 @@ export default {
 #webcam {
   width: 100%;
   height: auto;
+  background: var(--vt-c-black);
+}
+#overlay {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10;
 }
 video, canvas {
   position: fixed;
@@ -101,6 +128,8 @@ footer {
   left: 0;
   right: 0;
   bottom: 0;
+}
+footer > div {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -109,17 +138,5 @@ footer {
 footer button {
   flex: 1;
   height: 100%;
-}
-#loading {
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  top: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: var(--vt-c-black);
-  z-index: 10;
 }
 </style>

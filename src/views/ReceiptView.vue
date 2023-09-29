@@ -13,14 +13,14 @@ import axios from 'axios'
       </a>
     </nav>
     <div id="merchant">
-      <h3>{{ merchant || `Receipt ${id}` }}</h3>
-      <p id="date">{{ date || 'Loading...' }}</p>
+      <h3>{{ merchant }}</h3>
+      <p id="date">{{ date }}</p>
     </div>
     <ShareText :value="longURL" :display="shortURL" title="Dotch" text="Check out my receipt" />
   </header>
   <main>
     <Transition name="slide-up" mode="out-in">
-    <div id="receipt" v-if="receipt">
+    <div id="receipt" v-if="showReceipt">
       <div id="toolbar">
         <div id="tooltip" v-if="!selectedItems.length">
           Tap items to add up
@@ -44,16 +44,12 @@ import axios from 'axios'
       </div>
       <ul id="totals">
         <li>
-          <span>Subtotal</span>
-          <span>{{ subtotal }}</span>
-        </li>
-        <li>
           <span>Tax</span>
-          <span>{{ tax }}</span>
+          <span>{{ receipt.tax }}</span>
         </li>
         <li>
           <span>Total</span>
-          <span>{{ total }}</span>
+          <span>{{ receipt.total }}</span>
         </li>
       </ul>
     </div>
@@ -62,7 +58,7 @@ import axios from 'axios'
     </div>
     </Transition>
   </main>
-  <footer v-if="receipt">
+  <footer v-if="showReceipt">
     <a href="/">Scan another receipt</a>
   </footer>
 </template>
@@ -74,7 +70,7 @@ export default {
   },
   data() {
     return {
-      receipt: null,
+      receipt: {},
       selectedItems: [],
     };
   },
@@ -82,53 +78,41 @@ export default {
     this.fetchReceipt();
   },
   computed: {
-    merchant () {
-      return this.receipt && this.receipt.data.merchant;
-    },
-    date () {
-      return  this.receipt && this.receipt.data.date;
-    },
-    currency () {
-      return  this.receipt && this.receipt.data.currency;
-    },
-    items () {
-      return this.receipt && this.receipt.data.items;
-    },
-    taxes () {
-      return this.receipt && this.receipt.data.taxes;
-    },
-    tax () {
-      return this.receipt && this.receipt.data.tax;
-    },
-    total () {
-      return  this.receipt && this.receipt.data.total;
-    },
     shortURL() {
       return `dotch.app/bill/${this.id}`;
     },
     longURL() {
       return `https://dotch.app/bill/${this.id}`;
     },
+    merchant() {
+      return this.receipt.merchant || `Receipt ${this.id}`;
+    },
+    date() {
+      return this.receipt.date || 'Loading...';
+    },
+    items() {
+      let items = this.receipt.items || [];
+      return items.map((item, index) => {
+        item.key = index;
+        item.amount = item.totalAmount;
+        return item;
+      });
+    },
     subtotal() {
       let subtotal = this.selectedItems.reduce((acc, item) => {
         return acc + item.amount;
       }, 0);
-      return `${ this.currency} ${ subtotal.toFixed(2) }`;
+      return `${ this.receipt.currency} ${ subtotal.toFixed(2) }`;
     },
+    showReceipt() {
+      return this.items.length;
+    }
   },
   methods: {
     async fetchReceipt() {
       try {
-        console.log('try')
-        const receipt = await axios.get(`https://dotch.glitch.me/receipt/${this.id}`);
-        this.receipt = receipt;
-        this.merchant = receipt.data.merchant;
-        this.date = receipt.data.date;
-        this.currency = receipt.data.currency;
-        this.items = receipt.data.items;
-        this.taxes = receipt.data.taxes;
-        this.tax = receipt.data.tax;
-        this.total = receipt.data.total;
+        const apiResponse = await axios.get(`https://dotch.glitch.me/receipt/${this.id}`);
+        this.receipt = apiResponse.data.data;
       } catch (error) {
         // this.$router.push('/404');
       }
