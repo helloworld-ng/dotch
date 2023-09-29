@@ -26,5 +26,7 @@ defineProps({
   .item.selected {
     background-color: var(--vt-c-white-soft);
     color: var(--vt-c-text-light-1);
+    border-color: var(--vt-c-black);
+    box-shadow: 0 2px 0 rgba(0,0,0,0.1);
   }
 </style>

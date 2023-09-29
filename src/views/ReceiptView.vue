@@ -12,11 +12,15 @@ import axios from 'axios'
         <img alt="Dotch logo" src="../assets/logo.svg" />
       </a>
     </nav>
+    <Transition name="fade" mode="out-in" appear>
     <div id="merchant">
       <h3>{{ merchant }}</h3>
       <p id="date">{{ date }}</p>
     </div>
+    </Transition>
+    <Transition name="slide-down" mode="out-in" appear>
     <ShareText :value="longURL" :display="shortURL" title="Dotch" text="Check out my receipt" />
+  </Transition>
   </header>
   <main>
     <Transition name="slide-up" mode="out-in">
@@ -88,7 +92,12 @@ export default {
       return this.receipt.merchant || `Receipt ${this.id}`;
     },
     date() {
-      return this.receipt.date || 'Loading...';
+      const formatDate = () => {
+        const receiptDate = new Date(this.receipt.date);
+        const options = { year: 'numeric', month: 'long', day: 'numeric' };
+        return receiptDate.toLocaleDateString(undefined, options);
+      };
+      return this.receipt.date ? formatDate() : 'Loading...';
     },
     items() {
       let items = this.receipt.items || [];
@@ -113,8 +122,9 @@ export default {
       try {
         const apiResponse = await axios.get(`https://dotch.glitch.me/receipt/${this.id}`);
         this.receipt = apiResponse.data.data;
+        this.toggleItem(this.items[0]);
       } catch (error) {
-        // this.$router.push('/404');
+        this.$router.push('/404');
       }
     },
     toggleItem(item) {
@@ -122,7 +132,7 @@ export default {
       if (item.selected) {
         this.selectedItems.push(item);
       } else {
-        this.selectedItems = this.selectedItems.filter(i => i.name !== item.name);
+        this.selectedItems = this.selectedItems.filter(i => i.key !== item.key);
       }
     },
     resetCount() {
