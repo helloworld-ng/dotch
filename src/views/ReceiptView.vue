@@ -49,11 +49,11 @@ import axios from 'axios'
       <ul id="totals">
         <li>
           <span>Tax</span>
-          <span>{{ receipt.tax }}</span>
+          <span>{{ receipt.tax || '-' }}</span>
         </li>
         <li>
           <span>Total</span>
-          <span>{{ receipt.total }}</span>
+          <span>{{ receipt.total || '-' }}</span>
         </li>
       </ul>
     </div>
