@@ -108,8 +108,8 @@ export default {
       });
     },
     subtotal() {
-      let selectedItems = this.selectedItems.filter((item) => typeof item === "number");
-      let subtotal = selectedItems.reduce((acc, item) => {
+      let validSelectedItems = this.selectedItems.filter((item) => typeof item.amount === "number")
+      let subtotal = validSelectedItems.reduce((acc, item) => {
         return acc + item.amount;
       }, 0);
       return `${ this.receipt.currency} ${ subtotal.toFixed(2) }`;
