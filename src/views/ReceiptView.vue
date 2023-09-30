@@ -83,10 +83,10 @@ export default {
   },
   computed: {
     shortURL() {
-      return `dotch.app/bill/${this.id}`;
+      return `dotch.app/receipt/${this.id}`;
     },
     longURL() {
-      return `https://dotch.app/bill/${this.id}`;
+      return `https://dotch.app/receipt/${this.id}`;
     },
     merchant() {
       return this.receipt.merchant || `Receipt ${this.id}`;
